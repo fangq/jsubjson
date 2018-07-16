@@ -1,0 +1,80 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
+  "rules": {
+	// Possible Errors
+	"for-direction": "warn",
+	"no-await-in-loop": "warn",
+	"no-constant-condition": ["error", { "checkLoops": false }],
+	"no-empty": ["warn"],
+	"no-unreachable": "error",
+
+	// Best Practices
+	"eqeqeq": ["warn", "always", { "null": "ignore" }],
+	"guard-for-in": "error",
+	"no-empty-function": ["warn", { "allow": ["functions", "arrowFunctions", "constructors"] }],
+	"no-eval": "error",
+	"no-implied-eval": "error",
+	"no-new-func": "error",
+	"no-useless-concat": "error",
+	"radix": "error",
+
+	// Variables
+
+	"no-label-var": "warn",
+	"no-restricted-globals": "error",
+	"no-shadow": "error",
+	"no-shadow-restricted-names": "error",
+	"no-use-before-define": "error",
+
+	// Node.js and CommonJS
+
+	"callback-return": "error",
+	"global-require": "warn",
+	"no-buffer-constructor": "error",
+	"no-mixed-requires": "error",
+	"no-new-require": "error",
+	"no-path-concat": "error",
+
+	// Stylistic Issues
+	"camelcase": "warn",
+	"comma-dangle": ["error", "never"],
+	"comma-spacing": "error",
+	"comma-style": "error",
+	"indent": ["error", "tab", { "SwitchCase": 1 }],
+	"no-lonely-if": "warn",
+	"no-mixed-spaces-and-tabs": "error",
+	"no-trailing-spaces": "error",
+
+	// ECMAScript 6
+	"arrow-parens": ["error", "as-needed"],
+	"arrow-spacing": "warn",
+	"no-const-assign": "error",
+	"no-duplicate-imports": "warn",
+	"no-useless-computed-key": "error",
+	"no-useless-constructor": "error",
+	"no-useless-rename": "error",
+	"no-var": "error",
+	"object-shorthand": ["warn", "consistent-as-needed"],
+	"prefer-arrow-callback": "warn",
+	"prefer-const": "error",
+	"prefer-destructuring": "warn",
+	"prefer-numeric-literals": "warn",
+	"prefer-rest-params": "warn",
+	"prefer-spread": "warn",
+	"prefer-template": "warn",
+	"rest-spread-spacing": "warn",
+	"template-curly-spacing": "warn",
+	"yield-star-spacing": "error"
+  }
+}

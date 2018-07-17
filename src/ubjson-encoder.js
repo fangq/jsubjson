@@ -101,7 +101,7 @@ export class UbjsonEncoder {
 		if ((this._options.optimizeArrays === true
 				|| this._options.optimizeArrays === 'onlyTypedArray')
 				&& ArrayBuffer.isView(value)) {
-			switch (value.name) {
+			switch (value.constructor.name) {
 				case 'Int8Array':
 					return [].concat(
 						this._packContainerMarkers('i', value.length),

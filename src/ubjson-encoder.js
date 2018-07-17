@@ -165,7 +165,7 @@ export class UbjsonEncoder {
 		let type;
 		let count;
 		if (optimize) {
-			type = items.map(x => x.type).reduce(this._typeReducer);
+			type = this._obtainCommonType(items);
 			count = items.length;
 		}
 		const packers = this._packContainerMarkers(type, count);
@@ -180,6 +180,11 @@ export class UbjsonEncoder {
 		return packers;
 	}
 
+	_obtainCommonType(items) {
+		const type = items.map(x => x.type).reduce(this._typeReducer);
+		return (type === 'U' && items.some(x => x.value < 0)) ? 'I' : type;
+	}
+
 	_typeReducer(a, b) {
 		if (a === b) {
 			return a;
@@ -188,8 +193,7 @@ export class UbjsonEncoder {
 			return null;
 		}
 		const reduceTo = seq => seq[Math.min(seq.indexOf(a), seq.indexOf(b))];
-		const result = reduceTo('Dd') || reduceTo('SC') || reduceTo('lIUi');
-		return result === 'U' ? 'I' : result;
+		return reduceTo('Dd') || reduceTo('SC') || reduceTo('lIUi');
 	}
 
 	_packType(value) {

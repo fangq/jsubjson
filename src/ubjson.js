@@ -1,7 +1,7 @@
 import { UbjsonEncoder } from './ubjson-encoder';
 import { UbjsonDecoder } from './ubjson-decoder';
 
-export class Ubjson {
+export default class Ubjson {
 	static encode(value, options = {}) {
 		const encoder = new UbjsonEncoder(options);
 		return encoder.encode(value);

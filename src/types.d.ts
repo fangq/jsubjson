@@ -19,9 +19,7 @@ export interface UbjsonDecoder {
 	decode(buffer: ArrayBuffer): any;
 }
 
-export interface Ubjson {
+export default interface Ubjson {
 	encode(value: any, options?: UbjsonEncoderOptions): ArrayBuffer;
 	decode(buffer: ArrayBuffer, options?: UbjsonDecoderOptions): any;
 }
-
-declare const Ubjson: Ubjson;

@@ -172,7 +172,7 @@ export class UbjsonEncoder {
 		for (const item of items) {
 			item.key && packers.push(...this._encodeValue(item.key, 'S'));
 			type == null && packers.push(this._packType(item.type));
-			packers.push(...this._encodeValue(item.value, item.type));
+			packers.push(...this._encodeValue(item.value, type || item.type));
 		}
 		if (count == null) {
 			packers.push(this._packType(terminator));

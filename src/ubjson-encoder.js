@@ -1,7 +1,19 @@
+let textEncoderFactory;
+if (typeof TextEncoder !== 'undefined') {
+	textEncoderFactory = () => new TextEncoder();
+}
+else {
+	textEncoderFactory = () => {
+		// eslint-disable-next-line global-require
+		const util = require('util');
+		return new util.TextEncoder();
+	};
+}
+
 export class UbjsonEncoder {
 	constructor(options = {}) {
 		this._options = options;
-		this._textEncoder = new TextEncoder();
+		this._textEncoder = textEncoderFactory();
 	}
 
 	encode(value) {

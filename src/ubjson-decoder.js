@@ -1,7 +1,19 @@
+let textDecoderFactory;
+if (typeof TextDecoder !== 'undefined') {
+	textDecoderFactory = () => new TextDecoder();
+}
+else {
+	textDecoderFactory = () => {
+		// eslint-disable-next-line global-require
+		const util = require('util');
+		return new util.TextDecoder();
+	};
+}
+
 export class UbjsonDecoder {
 	constructor(options = {}) {
 		this._options = options;
-		this._textDecoder = new TextDecoder();
+		this._textDecoder = textDecoderFactory();
 	}
 
 	decode(buffer) {

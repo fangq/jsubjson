@@ -1,6 +1,6 @@
 {
   "name": "@shelacek/ubjson",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lightweight, quick and dirty UBJSON encoder/decoder for the browser and node.js.",
   "main": "dist/ubjson.js",
   "module": "dist/ubjson.es.js",

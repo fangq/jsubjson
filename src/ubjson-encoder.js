@@ -134,7 +134,7 @@ export class UbjsonEncoder {
 					);
 			}
 		}
-		const items = value.map(x => ({
+		const items = (Array.isArray(value) ? value : Array.from(value)).map(x => ({
 			type: this._getType(x),
 			value: x
 		}));

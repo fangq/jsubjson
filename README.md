@@ -38,10 +38,10 @@ console.log(obj); // { hello: 'world', from: ['UBJSON'] }
 > Note: You can find typings at https://bitbucket.org/shelacek/ubjson/src/master/src/types.d.ts.
 
 
-### `Ubjson.encode(value: any, options?: UbjsonEncoderOptions): ArrayBuffer`
+### `Ubjson.encode(value, [options])`
 
 - `value: any` - input value, array or object to serialize.
-- `options: UbjsonEncoderOptions` (optional) - encoding options.
+- `options: Object` (optional) - encoding options.
   - `options.optimizeArrays: boolean | 'onlyTypedArray'` (default `false`) - enable use
     of [optimized format] for arrays. If `'onlyTypedArray'` is used, only *TypedArrays* use strongly
     typed container.
@@ -53,10 +53,10 @@ Method returns `ArrayBuffer` with *UBJSON* data.
 [optimized format]: http://ubjson.org/type-reference/container-types/#optimized-format
 
 
-### `Ubjson.decode(buffer: ArrayBuffer, options?: UbjsonDecoderOptions): any`
+### `Ubjson.decode(buffer, [options])`
 
 - `buffer: ArrayBuffer` - input buffer, that *UBJSON* data.
-- `options: UbjsonDecoderOptions` (optional) - decoding options.
+- `options: Object` (optional) - decoding options.
   - `options.int64Handling: 'error' | 'skip' | 'raw'` (default `error`) - Handling of unsupported
     *int64* values. 'error' throws exception, 'skip' ignore that value (or key/value pair) and 'raw'
     returns Uint8Array with *int64* bytes.
@@ -66,7 +66,7 @@ Method returns `ArrayBuffer` with *UBJSON* data.
   - `options.useTypedArrays: boolean` (default `true`) - enable use of *TypedArrays* for strongly
     typed containers.
 
-Method returns decoded *UBJSON* value/object/array.
+Method returns decoded *UBJSON* value/object/array (`any`).
 
 
 ## Limitations

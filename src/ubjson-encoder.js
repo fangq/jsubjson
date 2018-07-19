@@ -96,13 +96,11 @@ export class UbjsonEncoder {
 					if (-32768 <= value && value <= 32767) {
 						return 'I';
 					}
-					else {
+					if (-2147483648 <= value && value <= 2147483647) {
 						return 'l';
 					}
 				}
-				else {
-					return (Number.isNaN(value) || Math.fround(value) === value) ? 'd' : 'D';
-				}
+				return (Number.isNaN(value) || Math.fround(value) === value) ? 'd' : 'D';
 			case 'object':
 				return Array.isArray(value) || ArrayBuffer.isView(value) ? '[' : '{';
 		}

@@ -52,7 +52,8 @@ export class UbjsonDecoder {
 				return this._handleUnsupported(
 					this._decodeCount(),
 					this._options.highPrecisionNumberHandling,
-					false);
+					false
+				);
 			case 'C':
 				return String.fromCharCode(this._decode('i'));
 			case 'S':
@@ -177,13 +178,15 @@ export class UbjsonDecoder {
 	_readUint8Array(byteLength) {
 		return this._read(
 			({ array }, offset) => new Uint8Array(array.buffer, array.byteOffset + offset, byteLength),
-			byteLength);
+			byteLength
+		);
 	}
 
 	_readInt8Array(byteLength) {
 		return this._read(
 			({ array }, offset) => new Int8Array(array.buffer, array.byteOffset + offset, byteLength),
-			byteLength);
+			byteLength
+		);
 	}
 
 	_readString(byteLength) {
@@ -192,7 +195,8 @@ export class UbjsonDecoder {
 				const subview = new DataView(array.buffer, array.byteOffset + offset, byteLength);
 				return this._textDecoder.decode(subview);
 			},
-			byteLength);
+			byteLength
+		);
 	}
 
 	_skip(byteLength = 1) {

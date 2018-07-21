@@ -116,8 +116,7 @@ export class UbjsonDecoder {
 		else {
 			const array = [];
 			while (this._readType(true) !== ']') {
-				const value = this._decode();
-				value !== undefined && array.push(value);
+				array.push(this._decode());
 			}
 			this._skip();
 			return array;
@@ -136,10 +135,7 @@ export class UbjsonDecoder {
 		else {
 			while (this._readType(true) !== '}') {
 				const key = this._decode('S');
-				const value = this._decode();
-				if (value !== undefined) {
-					object[key] = value;
-				}
+				object[key] = this._decode();
 			}
 			this._skip();
 		}
@@ -170,11 +166,6 @@ export class UbjsonDecoder {
 		throw new Error('Unknown handling behavior');
 	}
 
-	_readType(lookahead) {
-		const charCode = this._read(({ view }, offset) => view.getInt8(offset), lookahead ? 0 : 1);
-		return String.fromCharCode(charCode);
-	}
-
 	_readUint8Array(byteLength) {
 		return this._read(
 			({ array }, offset) => new Uint8Array(array.buffer, array.byteOffset + offset, byteLength),
@@ -202,6 +193,18 @@ export class UbjsonDecoder {
 	_skip(byteLength = 1) {
 		this._checkRange(byteLength);
 		this._offset += byteLength;
+	}
+
+	_readType(lookahead) {
+		const { array, view } = this._storage;
+		let type = 'N';
+		while (type === 'N' && this._offset < array.byteLength) {
+			type = String.fromCharCode(view.getInt8(this._offset++));
+		}
+		if (lookahead) {
+			this._offset--;
+		}
+		return type;
 	}
 
 	_read(retriever, byteLength) {

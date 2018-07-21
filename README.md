@@ -71,9 +71,9 @@ Method returns decoded *UBJSON* value/object/array (`any`).
 
 ## Limitations
 
-This library does not support encoding of [no-op value] yet. Javascript not support
-[64-bit integers]&nbsp;(yet) and [high-precision numbers], as well as the library. You can use
-`'raw'` option in `int64Handling`/`highPrecisionNumberHandling` to retrive original data.
+Javascript not support[64-bit integers]&nbsp;(yet) and [high-precision numbers], as well
+as the library. You can use `'raw'` option in `int64Handling`/`highPrecisionNumberHandling`
+to retrive original data.
 
 [no-op value]: http://ubjson.org/type-reference/value-types/#noop
 [64-bit integers]: http://ubjson.org/type-reference/value-types/#numeric-64bit

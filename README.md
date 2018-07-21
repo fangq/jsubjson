@@ -7,8 +7,6 @@ This library implements [Universal Binary JSON] Draft 12 encoder/decoder in Java
 > ⚠ Please note, this package is in early alpha stage. Encoding and decoding working as far
 > as I know. If you encounter an bug, please [create an issue].
 
-There are no unit test yet. PRs are welcome!
-
 [Universal Binary JSON]: http://ubjson.org/
 [create an issue]: https://bitbucket.org/shelacek/ubjson/issues
 
@@ -71,7 +69,7 @@ Method returns decoded *UBJSON* value/object/array (`any`).
 
 ## Limitations
 
-Javascript not support[64-bit integers]&nbsp;(yet) and [high-precision numbers], as well
+Javascript not support [64-bit integers]&nbsp;(yet) and [high-precision numbers], as well
 as the library. You can use `'raw'` option in `int64Handling`/`highPrecisionNumberHandling`
 to retrive original data.
 

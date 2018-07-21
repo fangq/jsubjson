@@ -10,7 +10,9 @@
     "build": "rollup -c && cp src/types.d.ts dist/ubjson.d.ts",
     "prepublishOnly": "yarn run lint",
     "prepare": "yarn run build",
-    "lint": "eslint src"
+    "lint": "eslint src test",
+    "pretest": "yarn run build",
+    "test": "tape test/**"
   },
   "repository": {
     "type": "git",
@@ -35,7 +37,8 @@
     "eslint": "^5.1.0",
     "rollup": "^0.62.0",
     "rollup-plugin-babel": "^4.0.0-beta.7",
-    "rollup-plugin-terser": "^1.0.1"
+    "rollup-plugin-terser": "^1.0.1",
+    "tape": "^4.9.1"
   },
   "files": [
     "dist/**"

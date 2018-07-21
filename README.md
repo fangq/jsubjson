@@ -89,3 +89,21 @@ on node.js), support for `TypedArrays` and `class` keyword. Library should work 
 
 In case of interest, I can reduce requirements.
 
+
+## Alternatives
+
+There are some great alternatives:
+
+- [Sannis/node-ubjson] - node.js (only) library, that implements draft 8.
+- [artcompiler/L16] - written in asm.js and implements draft 8.
+- [zentner-kyle/ubjson.js] - no documentation, but it is cjs module and implements draft 12?!
+
+> *\[Please correct me if this information is obsolete or wrong.\]*
+
+This library was created because I needed to work with UBJSON in browser - and there are no
+reasonable draft 12 implementation :-(.
+
+[Sannis/node-ubjson]: https://github.com/Sannis/node-ubjson
+[artcompiler/L16]: https://github.com/artcompiler/L16
+[zentner-kyle/ubjson.js]: https://github.com/zentner-kyle/ubjson.js
+

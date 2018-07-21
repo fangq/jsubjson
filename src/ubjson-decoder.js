@@ -87,7 +87,7 @@ export class UbjsonDecoder {
 
 	_decodeArray() {
 		const { type, count } = this._decodeContainerMarkers();
-		if ('ZNTF'.indexOf(type) !== -1) {
+		if ('ZTF'.indexOf(type) !== -1) {
 			return new Array(count).fill(this._decode(type));
 		}
 		if (this._options.useTypedArrays !== false) {

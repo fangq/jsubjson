@@ -1,14 +1,10 @@
-let textDecoderFactory;
-if (typeof TextDecoder !== 'undefined') {
-	textDecoderFactory = () => new TextDecoder();
-}
-else {
-	textDecoderFactory = () => {
+const textDecoderFactory = typeof TextDecoder !== 'undefined'
+	? () => new TextDecoder()
+	: () => {
 		// eslint-disable-next-line global-require
 		const util = require('util');
 		return new util.TextDecoder();
 	};
-}
 
 export class UbjsonDecoder {
 	constructor(options = {}) {
@@ -43,7 +39,7 @@ export class UbjsonDecoder {
 			case 'l':
 				return this._read(({ view }, offset) => view.getInt32(offset), 4);
 			case 'L':
-				return this._handleUnsupported(8, this._options.int64Handling, true);
+				return this._handleUnsupported(8, this._options.int64Handling || 'error', true);
 			case 'd':
 				return this._read(({ view }, offset) => view.getFloat32(offset), 4);
 			case 'D':
@@ -51,7 +47,7 @@ export class UbjsonDecoder {
 			case 'H':
 				return this._handleUnsupported(
 					this._decodeCount(),
-					this._options.highPrecisionNumberHandling,
+					this._options.highPrecisionNumberHandling || 'error',
 					false
 				);
 			case 'C':
@@ -153,7 +149,7 @@ export class UbjsonDecoder {
 		throw new Error('Unexpected chunk, expected numeric type');
 	}
 
-	_handleUnsupported(byteLength, handlingBehavior = 'error', isBinary = true) {
+	_handleUnsupported(byteLength, handlingBehavior, isBinary) {
 		switch (handlingBehavior) {
 			case 'error':
 				throw new Error('Unsuported type');

@@ -1,14 +1,10 @@
-let textEncoderFactory;
-if (typeof TextEncoder !== 'undefined') {
-	textEncoderFactory = () => new TextEncoder();
-}
-else {
-	textEncoderFactory = () => {
+const textEncoderFactory = typeof TextEncoder !== 'undefined'
+	? () => new TextEncoder()
+	: () => {
 		// eslint-disable-next-line global-require
 		const util = require('util');
 		return new util.TextEncoder();
 	};
-}
 
 export class UbjsonEncoder {
 	constructor(options = {}) {

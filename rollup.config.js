@@ -5,7 +5,18 @@ export default {
 	input: 'src/ubjson.js',
 	plugins: [
 		babel({ exclude: 'node_modules/**' }),
-		terser({ mangle: { properties: { regex: /^_/ } } })
+		terser({
+			ecma: 6,
+			module: true,
+			mangle: {
+				toplevel: true,
+				properties: { regex: /^_/ }
+			},
+			compress: {
+				passes: 2,
+				unsafe: true
+			}
+		})
 	],
 	output: [
 		{

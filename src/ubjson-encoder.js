@@ -108,6 +108,7 @@ export class UbjsonEncoder {
 	}
 
 	_encodeArray(value) {
+		let type;
 		if ((this._options.optimizeArrays === true
 				|| this._options.optimizeArrays === 'onlyTypedArray')
 				&& ArrayBuffer.isView(value)) {
@@ -123,29 +124,21 @@ export class UbjsonEncoder {
 						this._packTypedArray(value)
 					);
 				case 'Int16Array':
-					return [].concat(
-						this._packContainerMarkers('I', value.length),
-						value.map(x => this._encodeValue(x, 'I'))
-					);
+					type = 'I';
+					break;
 				case 'Int32Array':
-					return [].concat(
-						this._packContainerMarkers('l', value.length),
-						value.map(x => this._encodeValue(x, 'l'))
-					);
+					type = 'l';
+					break;
 				case 'Float32Array':
-					return [].concat(
-						this._packContainerMarkers('d', value.length),
-						value.map(x => this._encodeValue(x, 'd'))
-					);
+					type = 'd';
+					break;
 				case 'Float64Array':
-					return [].concat(
-						this._packContainerMarkers('D', value.length),
-						value.map(x => this._encodeValue(x, 'D'))
-					);
+					type = 'D';
+					break;
 			}
 		}
 		const items = (Array.isArray(value) ? value : Array.from(value)).map(x => ({
-			type: this._getType(x),
+			type: type || this._getType(x),
 			value: x
 		}));
 		return this._packContainerItems(items, ']', this._options.optimizeArrays === true);

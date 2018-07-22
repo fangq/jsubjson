@@ -30,11 +30,8 @@ export class UbjsonEncoder {
 		return array.buffer;
 	}
 
-	_encode(value, type = null) {
-		if (type != null) {
-			return this._encodeValue(value, type);
-		}
-		type = this._getType(value);
+	_encode(value) {
+		const type = this._getType(value);
 		return [
 			this._packType(type),
 			...this._encodeValue(value, type)

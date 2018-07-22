@@ -201,8 +201,7 @@ test('decode array (mixed, optimized)', t => {
 test('decode array (strongly typed, optimized)', t => {
 	t.deepEqual(
 		ubjson.decode(
-			toBuffer('[', '$', 'i', '#', 'i', 3, 1, 2, 3),
-			{ useTypedArrays: false }
+			toBuffer('[', '$', 'i', '#', 'i', 3, 1, 2, 3)
 		),
 		[1, 2, 3]
 	);
@@ -238,52 +237,70 @@ test('decode array (only null values, optimized)', t => {
 });
 
 test('decode array (int8, strongly typed, optimized) [use typed array]', t => {
-	const actual = ubjson.decode(toBuffer('[', '$', 'i', '#', 'i', 2, 0x12, 0xfe));
+	const actual = ubjson.decode(
+		toBuffer('[', '$', 'i', '#', 'i', 2, 0x12, 0xfe),
+		{ useTypedArrays: true }
+	);
 	t.assert(actual.constructor.name === 'Int8Array');
 	t.deepEqual(actual, [18, -2]);
 	t.end();
 });
 
 test('decode array (uint8, strongly typed, optimized) [use typed array]', t => {
-	const actual = ubjson.decode(toBuffer('[', '$', 'U', '#', 'i', 2, 0x12, 0xfe));
+	const actual = ubjson.decode(
+		toBuffer('[', '$', 'U', '#', 'i', 2, 0x12, 0xfe),
+		{ useTypedArrays: true }
+	);
 	t.assert(actual.constructor.name === 'Uint8Array');
 	t.deepEqual(actual, [18, 254]);
 	t.end();
 });
 
 test('decode array (int16, strongly typed, optimized) [use typed array]', t => {
-	const actual = ubjson.decode(toBuffer(
-		'[', '$', 'I', '#', 'i', 2, 0x12, 0x34, 0xfe, 0xdc
-	));
+	const actual = ubjson.decode(
+		toBuffer('[', '$', 'I', '#', 'i', 2, 0x12, 0x34, 0xfe, 0xdc),
+		{ useTypedArrays: true }
+	);
 	t.assert(actual.constructor.name === 'Int16Array');
 	t.deepEqual(actual, [4660, -292]);
 	t.end();
 });
 
 test('decode array (int32, strongly typed, optimized) [use typed array]', t => {
-	const actual = ubjson.decode(toBuffer(
-		'[', '$', 'l', '#', 'i', 2, 0x12, 0x34, 0x56, 0x78, 0xfe, 0xdc, 0xba, 0x98
-	));
+	const actual = ubjson.decode(
+		toBuffer(
+			'[', '$', 'l', '#', 'i', 2,
+			0x12, 0x34, 0x56, 0x78, 0xfe, 0xdc, 0xba, 0x98
+		),
+		{ useTypedArrays: true }
+	);
 	t.assert(actual.constructor.name === 'Int32Array');
 	t.deepEqual(actual, [305419896, -19088744]);
 	t.end();
 });
 
 test('decode array (float32, strongly typed, optimized) [use typed array]', t => {
-	const actual = ubjson.decode(toBuffer(
-		'[', '$', 'd', '#', 'i', 2, 0x3e, 0x80, 0x00, 0x00, 0x3e, 0x00, 0x00, 0x00
-	));
+	const actual = ubjson.decode(
+		toBuffer(
+			'[', '$', 'd', '#', 'i', 2,
+			0x3e, 0x80, 0x00, 0x00, 0x3e, 0x00, 0x00, 0x00
+		),
+		{ useTypedArrays: true }
+	);
 	t.assert(actual.constructor.name === 'Float32Array');
 	t.deepEqual(actual, [0.25, 0.125]);
 	t.end();
 });
 
 test('decode array (float64, strongly typed, optimized) [use typed array]', t => {
-	const actual = ubjson.decode(toBuffer(
-		'[', '$', 'D', '#', 'i', 2,
-		0x3f, 0xd0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x3f, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	));
+	const actual = ubjson.decode(
+		toBuffer(
+			'[', '$', 'D', '#', 'i', 2,
+			0x3f, 0xd0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x3f, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+		),
+		{ useTypedArrays: true }
+	);
 	t.assert(actual.constructor.name === 'Float64Array');
 	t.deepEqual(actual, [0.25, 0.125]);
 	t.end();

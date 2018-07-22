@@ -128,7 +128,7 @@ test('encode array', t => {
 
 test('encode array (int8) [only typed array]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode([1, 2, 3], { optimizeArrays: 'onlyTypedArray' })),
+		toArray(ubjson.encode([1, 2, 3], { optimizeArrays: 'onlyTypedArrays' })),
 		toArray('[', 'i', 1, 'i', 2, 'i', 3, ']')
 	);
 	t.end();
@@ -228,7 +228,7 @@ test('encode array (float64 typed array) [optimize]', t => {
 
 test('encode array (uint8 typed array) [only typed array]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Uint8Array.from([1, 2, 3]), { optimizeArrays: 'onlyTypedArray' })),
+		toArray(ubjson.encode(Uint8Array.from([1, 2, 3]), { optimizeArrays: 'onlyTypedArrays' })),
 		toArray('[', '$', 'U', '#', 'i', 3, 1, 2, 3)
 	);
 	t.end();

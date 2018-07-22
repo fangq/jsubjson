@@ -1,5 +1,5 @@
 export interface UbjsonEncoderOptions {
-	optimizeArrays: boolean | 'onlyTypedArray';
+	optimizeArrays: boolean | 'onlyTypedArrays';
 	optimizeObjects: boolean;
 }
 

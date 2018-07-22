@@ -40,8 +40,8 @@ console.log(obj); // { hello: 'world', from: ['UBJSON'] }
 
 - `value: any` - input value, array or object to serialize.
 - `options: Object` (optional) - encoding options.
-  - `options.optimizeArrays: boolean | 'onlyTypedArray'` (default `false`) - enable use
-    of [optimized format] for arrays. If `'onlyTypedArray'` is used, only *TypedArrays* use strongly
+  - `options.optimizeArrays: boolean | 'onlyTypedArrays'` (default `false`) - enable use
+    of [optimized format] for arrays. If `'onlyTypedArrays'` is used, only *TypedArrays* use strongly
     typed container.
   - `options.optimizeObjects: boolean` (default `false`) - enable use of [optimized format]
     for objects.
@@ -61,7 +61,7 @@ Method returns `ArrayBuffer` with *UBJSON* data.
   - `options.highPrecisionNumberHandling: 'error' | 'skip' | 'raw'` (default `error`) - Handling
     of unsupported *high-precision numbers*. 'error' throws exception, 'skip' ignore that value
     (or key/value pair) and 'raw' returns string represents that number.
-  - `options.useTypedArrays: boolean` (default `true`) - enable use of *TypedArrays* for strongly
+  - `options.useTypedArrays: boolean` (default `false`) - enable use of *TypedArrays* for strongly
     typed containers.
 
 Method returns decoded *UBJSON* value/object/array (`any`).

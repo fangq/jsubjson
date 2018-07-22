@@ -86,7 +86,7 @@ export class UbjsonDecoder {
 		if ('ZTF'.indexOf(type) !== -1) {
 			return new Array(count).fill(this._decode(type));
 		}
-		if (this._options.useTypedArrays !== false) {
+		if (this._options.useTypedArrays) {
 			switch (type) {
 				case 'i':
 					return this._readInt8Array(count);

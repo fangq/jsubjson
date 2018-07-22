@@ -103,7 +103,7 @@ export class UbjsonEncoder {
 	_encodeArray(value) {
 		let type;
 		if ((this._options.optimizeArrays === true
-				|| this._options.optimizeArrays === 'onlyTypedArray')
+				|| this._options.optimizeArrays === 'onlyTypedArrays')
 				&& ArrayBuffer.isView(value)) {
 			switch (value.constructor.name) {
 				case 'Int8Array':

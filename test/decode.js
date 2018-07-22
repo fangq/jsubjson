@@ -5,6 +5,11 @@ function toBuffer(...args) {
 	return Uint8Array.from(args, x => x === +x ? x : x.charCodeAt()).buffer;
 }
 
+test('decode unsupported type', t => {
+	t.throws(() => ubjson.decode(toBuffer('!')));
+	t.end();
+});
+
 test('decode undefined', t => {
 	t.equal(
 		ubjson.decode(undefined),
@@ -77,14 +82,14 @@ test('decode int32', t => {
 	t.end();
 });
 
-test('decode int64 (error)', t => {
+test('decode int64 [error]', t => {
 	t.throws(() => ubjson.decode(
 		toBuffer('L', 0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0)
 	));
 	t.end();
 });
 
-test('decode int64 (skip)', t => {
+test('decode int64 [skip]', t => {
 	t.doesNotThrow(() => ubjson.decode(
 		toBuffer('L', 0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0),
 		{ int64Handling: 'skip' }
@@ -92,7 +97,7 @@ test('decode int64 (skip)', t => {
 	t.end();
 });
 
-test('decode int64 (raw)', t => {
+test('decode int64 [raw]', t => {
 	t.deepEqual(
 		ubjson.decode(
 			toBuffer('L', 0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0),
@@ -100,6 +105,14 @@ test('decode int64 (raw)', t => {
 		),
 		[0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0]
 	);
+	t.end();
+});
+
+test('decode int64 [invalid option]', t => {
+	t.throws(() => ubjson.decode(
+		toBuffer('L', 0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0),
+		{ int64Handling: 'invalid' }
+	));
 	t.end();
 });
 
@@ -119,14 +132,14 @@ test('decode float64', t => {
 	t.end();
 });
 
-test('decode high-precision number (error)', t => {
+test('decode high-precision number [error]', t => {
 	t.throws(() => ubjson.decode(
 		toBuffer('H', 'i', 3, '1', '.', '1')
 	));
 	t.end();
 });
 
-test('decode high-precision number (skip)', t => {
+test('decode high-precision number [skip]', t => {
 	t.doesNotThrow(() => ubjson.decode(
 		toBuffer('H', 'i', 3, '1', '.', '1'),
 		{ highPrecisionNumberHandling: 'skip' }
@@ -134,7 +147,7 @@ test('decode high-precision number (skip)', t => {
 	t.end();
 });
 
-test('decode high-precision number (raw)', t => {
+test('decode high-precision number [raw]', t => {
 	t.equal(
 		ubjson.decode(
 			toBuffer('H', 'i', 3, '1', '.', '1'),
@@ -169,7 +182,7 @@ test('decode array', t => {
 	t.end();
 });
 
-test('decode array with no-op', t => {
+test('decode array (with no-op)', t => {
 	t.deepEqual(
 		ubjson.decode(toBuffer('[', 'i', 1, 'N', 'i', 2, 'i', 3, 'N', ']')),
 		[1, 2, 3]
@@ -187,9 +200,32 @@ test('decode array (mixed, optimized)', t => {
 
 test('decode array (strongly typed, optimized)', t => {
 	t.deepEqual(
-		ubjson.decode(toBuffer('[', '$', 'i', '#', 'i', 3, 1, 2, 3)),
+		ubjson.decode(
+			toBuffer('[', '$', 'i', '#', 'i', 3, 1, 2, 3),
+			{ useTypedArrays: false }
+		),
 		[1, 2, 3]
 	);
+	t.end();
+});
+
+test('decode array (strongly typed, unexpected eof, optimized)', t => {
+	t.throws(() => ubjson.decode(toBuffer('[', '$', 'i', '#', 'i', 3, 1, 2)));
+	t.end();
+});
+
+test('decode array (strongly typed, invalid length value, optimized)', t => {
+	t.throws(() => ubjson.decode(toBuffer('[', '$', 'i', '#', 'i', -1)));
+	t.end();
+});
+
+test('decode array (strongly typed, invalid length type, optimized)', t => {
+	t.throws(() => ubjson.decode(toBuffer('[', '$', 'i', '#', 'C', '0')));
+	t.end();
+});
+
+test('decode array (strongly typed, malformed, optimized)', t => {
+	t.throws(() => ubjson.decode(toBuffer('[', '$', 'i', 1, 2, 3, ']')));
 	t.end();
 });
 
@@ -201,13 +237,55 @@ test('decode array (only null values, optimized)', t => {
 	t.end();
 });
 
-test('decode array (strongly typed, optimized, use typed array)', t => {
-	const actual = ubjson.decode(
-		toBuffer('[', '$', 'U', '#', 'i', 3, 1, 2, 3),
-		{ useTypedArrays: true }
-	);
+test('decode array (int8, strongly typed, optimized) [use typed array]', t => {
+	const actual = ubjson.decode(toBuffer('[', '$', 'i', '#', 'i', 2, 0x12, 0xfe));
+	t.assert(actual.constructor.name === 'Int8Array');
+	t.deepEqual(actual, [18, -2]);
+	t.end();
+});
+
+test('decode array (uint8, strongly typed, optimized) [use typed array]', t => {
+	const actual = ubjson.decode(toBuffer('[', '$', 'U', '#', 'i', 2, 0x12, 0xfe));
 	t.assert(actual.constructor.name === 'Uint8Array');
-	t.deepEqual(actual, [1, 2, 3]);
+	t.deepEqual(actual, [18, 254]);
+	t.end();
+});
+
+test('decode array (int16, strongly typed, optimized) [use typed array]', t => {
+	const actual = ubjson.decode(toBuffer(
+		'[', '$', 'I', '#', 'i', 2, 0x12, 0x34, 0xfe, 0xdc
+	));
+	t.assert(actual.constructor.name === 'Int16Array');
+	t.deepEqual(actual, [4660, -292]);
+	t.end();
+});
+
+test('decode array (int32, strongly typed, optimized) [use typed array]', t => {
+	const actual = ubjson.decode(toBuffer(
+		'[', '$', 'l', '#', 'i', 2, 0x12, 0x34, 0x56, 0x78, 0xfe, 0xdc, 0xba, 0x98
+	));
+	t.assert(actual.constructor.name === 'Int32Array');
+	t.deepEqual(actual, [305419896, -19088744]);
+	t.end();
+});
+
+test('decode array (float32, strongly typed, optimized) [use typed array]', t => {
+	const actual = ubjson.decode(toBuffer(
+		'[', '$', 'd', '#', 'i', 2, 0x3e, 0x80, 0x00, 0x00, 0x3e, 0x00, 0x00, 0x00
+	));
+	t.assert(actual.constructor.name === 'Float32Array');
+	t.deepEqual(actual, [0.25, 0.125]);
+	t.end();
+});
+
+test('decode array (float64, strongly typed, optimized) [use typed array]', t => {
+	const actual = ubjson.decode(toBuffer(
+		'[', '$', 'D', '#', 'i', 2,
+		0x3f, 0xd0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x3f, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	));
+	t.assert(actual.constructor.name === 'Float64Array');
+	t.deepEqual(actual, [0.25, 0.125]);
 	t.end();
 });
 
@@ -225,7 +303,7 @@ test('decode object', t => {
 	t.end();
 });
 
-test('decode object with no-op', t => {
+test('decode object (with no-op)', t => {
 	t.deepEqual(
 		ubjson.decode(toBuffer(
 			'N', '{',

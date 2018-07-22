@@ -4,8 +4,8 @@
 
 This library implements [Universal Binary JSON] Draft 12 encoder/decoder in JavaScript.
 
-> ⚠ Please note, this package is in early alpha stage. Encoding and decoding working as far
-> as I know. If you encounter an bug, please [create an issue].
+> ⚠ Encoding and decoding working as far as I know.
+> If you encounter an bug, please [create an issue].
 
 [Universal Binary JSON]: http://ubjson.org/
 [create an issue]: https://bitbucket.org/shelacek/ubjson/issues
@@ -14,7 +14,7 @@ This library implements [Universal Binary JSON] Draft 12 encoder/decoder in Java
 ## Example (browser)
 
 ```js
-import Ubjson from '@shelacek/ubjson';
+import { Ubjson } from '@shelacek/ubjson';
 const buffer = Ubjson.encode({ hello: 'world', from: ['UBJSON'] });
 const obj = Ubjson.decode(buffer);
 console.log(obj); // { hello: 'world', from: ['UBJSON'] }
@@ -33,7 +33,8 @@ console.log(obj); // { hello: 'world', from: ['UBJSON'] }
 
 ## API
 
-> Note: You can find typings at https://bitbucket.org/shelacek/ubjson/src/master/src/types.d.ts.
+> Note: For full API and exported symbols, please see typings at
+> https://bitbucket.org/shelacek/ubjson/src/master/src/types.d.ts.
 
 
 ### `Ubjson.encode(value, [options])`
@@ -104,4 +105,3 @@ reasonable draft 12 implementation :-(.
 [Sannis/node-ubjson]: https://github.com/Sannis/node-ubjson
 [artcompiler/L16]: https://github.com/artcompiler/L16
 [zentner-kyle/ubjson.js]: https://github.com/zentner-kyle/ubjson.js
-

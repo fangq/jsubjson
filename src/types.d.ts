@@ -9,17 +9,20 @@ export interface UbjsonDecoderOptions {
 	useTypedArrays: boolean;
 }
 
-export interface UbjsonEncoder {
+export declare class UbjsonEncoder {
 	constructor(options?: Partial<UbjsonEncoderOptions>);
 	encode(value: any): ArrayBuffer;
 }
 
-export interface UbjsonDecoder {
+export declare class UbjsonDecoder {
 	constructor(options?: Partial<UbjsonDecoderOptions>);
 	decode(buffer: ArrayBuffer): any;
 }
 
-export default interface Ubjson {
-	encode(value: any, options?: Partial<UbjsonEncoderOptions>): ArrayBuffer;
-	decode(buffer: ArrayBuffer, options?: Partial<UbjsonDecoderOptions>): any;
+export declare function encode(value: any, options?: Partial<UbjsonEncoderOptions>): ArrayBuffer;
+export declare function decode(buffer: ArrayBuffer, options?: Partial<UbjsonDecoderOptions>): any;
+
+export declare class Ubjson {
+	static encode(value: any, options?: Partial<UbjsonEncoderOptions>): ArrayBuffer;
+	static decode(buffer: ArrayBuffer, options?: Partial<UbjsonDecoderOptions>): any;
 }

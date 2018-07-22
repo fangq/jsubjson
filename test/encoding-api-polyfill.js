@@ -6,7 +6,7 @@ test('encode/decode with encoding API polyfill', t => {
 	global.TextDecoder = util.TextDecoder;
 	Object.keys(require.cache).forEach(x => delete require.cache[x]);
 	// eslint-disable-next-line global-require
-	const ubjson = require('../dist/ubjson');
+	const ubjson = require('../dist/ubjson').Ubjson;
 
 	const value = { hello: 'world', from: ['UBJSON'] };
 	t.deepEqual(ubjson.decode(ubjson.encode(value)), value);
@@ -18,7 +18,7 @@ test('encode/decode without encoding API polyfill', t => {
 	delete global.TextDecoder;
 	Object.keys(require.cache).forEach(x => delete require.cache[x]);
 	// eslint-disable-next-line global-require
-	const ubjson = require('../dist/ubjson');
+	const ubjson = require('../dist/ubjson').Ubjson;
 
 	const value = { hello: 'world', from: ['UBJSON'] };
 	t.deepEqual(ubjson.decode(ubjson.encode(value)), value);

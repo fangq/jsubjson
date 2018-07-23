@@ -20,4 +20,5 @@ pipelines:
           - node
         script:
           - yarn global add tap-xunit
+          - mkdir -p test-reports
           - yarn run test | tap-xunit > ./test-reports/xunit.xml

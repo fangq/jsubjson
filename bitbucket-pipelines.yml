@@ -20,5 +20,6 @@ pipelines:
           - node
         script:
           - yarn global add tap-xunit
+          - export PATH="$PATH:$(yarn global bin)"
           - mkdir -p test-reports
           - yarn run test | tap-xunit > ./test-reports/xunit.xml

@@ -1,5 +1,10 @@
 # UBJSON encoder/decoder
 
+[![npm](https://img.shields.io/npm/v/@shelacek/ubjson.svg)](https://www.npmjs.com/package/@shelacek/ubjson)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@shelacek/ubjson.svg)](https://bundlephobia.com/result?p=@shelacek/ubjson)
+[![Bitbucket Pipelines](https://img.shields.io/bitbucket/pipelines/shelacek/ubjson.svg)](https://bitbucket.org/shelacek/ubjson/addon/pipelines/home)
+[![Codecov](https://img.shields.io/codecov/c/bb/shelacek/ubjson.svg)](https://codecov.io/bb/shelacek/ubjson)
+
 *Lightweight, quick and dirty UBJSON encoder/decoder for the browser and node.js.*
 
 This library implements [Universal Binary JSON] Draft 12 encoder/decoder in JavaScript.

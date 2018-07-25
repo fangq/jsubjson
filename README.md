@@ -9,11 +9,14 @@
 
 This library implements [Universal Binary JSON] Draft 12 encoder/decoder in JavaScript.
 
-> ⚠ Encoding and decoding working as far as I know.
-> If you encounter an bug, please [create an issue].
+> ⚠ There are some changes between unstable versions and version 1.0.0. Please have a look
+> at the [CHANGELOG.md].
+
+Encoding and decoding working as far as I know. If you encounter an bug, please [create an issue].
 
 [Universal Binary JSON]: http://ubjson.org/
 [create an issue]: https://bitbucket.org/shelacek/ubjson/issues
+[CHANGELOG.md]: https://bitbucket.org/shelacek/ubjson/src/master/CHANGELOG.md
 
 
 ## Example (browser)

@@ -1,15 +1,10 @@
-const textDecoderFactory = typeof TextDecoder !== 'undefined'
-	? () => new TextDecoder()
-	: () => {
-		// eslint-disable-next-line global-require
-		const util = require('util');
-		return new util.TextDecoder();
-	};
-
 export class UbjsonDecoder {
 	constructor(options = {}) {
 		this._options = options;
-		this._textDecoder = textDecoderFactory();
+		this._textDecoder = new (typeof TextDecoder !== 'undefined'
+			? TextDecoder
+			: require('util').TextDecoder // eslint-disable-line global-require
+		)();
 	}
 
 	decode(buffer) {
@@ -39,7 +34,7 @@ export class UbjsonDecoder {
 			case 'l':
 				return this._read(({ view }, offset) => view.getInt32(offset), 4);
 			case 'L':
-				return this._handleUnsupported(8, this._options.int64Handling || 'error', true);
+				return this._handleUnsupported(8, this._options.int64Handling, true);
 			case 'd':
 				return this._read(({ view }, offset) => view.getFloat32(offset), 4);
 			case 'D':
@@ -47,7 +42,7 @@ export class UbjsonDecoder {
 			case 'H':
 				return this._handleUnsupported(
 					this._decodeCount(),
-					this._options.highPrecisionNumberHandling || 'error',
+					this._options.highPrecisionNumberHandling,
 					false
 				);
 			case 'C':
@@ -70,7 +65,7 @@ export class UbjsonDecoder {
 				this._skip();
 				type = this._readType(false);
 				if (this._readType(true) !== '#') {
-					throw new Error('Type container marker cannot be specified without count');
+					throw new Error('Expected count marker');
 				}
 				/* fall through */
 			case '#':
@@ -140,48 +135,41 @@ export class UbjsonDecoder {
 
 	_decodeCount() {
 		const count = this._decode();
-		if (Number.isInteger(count)) {
-			if (count < 0) {
-				throw new Error('Length/count must be natural');
-			}
+		if (Number.isInteger(count) && count >= 0) {
 			return count;
 		}
-		throw new Error('Unexpected chunk, expected numeric type');
+		throw new Error('Invalid length/count');
 	}
 
 	_handleUnsupported(byteLength, handlingBehavior, isBinary) {
 		switch (handlingBehavior) {
-			case 'error':
-				throw new Error('Unsuported type');
 			case 'skip':
 				this._skip(byteLength);
 				return undefined;
 			case 'raw':
 				return isBinary ? this._readUint8Array(byteLength) : this._readString(byteLength);
 		}
-		throw new Error('Unknown handling behavior');
+		throw new Error('Unsuported type');
 	}
 
 	_readUint8Array(byteLength) {
 		return this._read(
-			({ array }, offset) => new Uint8Array(array.buffer, array.byteOffset + offset, byteLength),
+			({ array }, offset) => new Uint8Array(array.buffer, offset, byteLength),
 			byteLength
 		);
 	}
 
 	_readInt8Array(byteLength) {
 		return this._read(
-			({ array }, offset) => new Int8Array(array.buffer, array.byteOffset + offset, byteLength),
+			({ array }, offset) => new Int8Array(array.buffer, offset, byteLength),
 			byteLength
 		);
 	}
 
 	_readString(byteLength) {
 		return this._read(
-			({ array }, offset) => {
-				const subview = new DataView(array.buffer, array.byteOffset + offset, byteLength);
-				return this._textDecoder.decode(subview);
-			},
+			({ array }, offset) =>
+				this._textDecoder.decode(new DataView(array.buffer, offset, byteLength)),
 			byteLength
 		);
 	}

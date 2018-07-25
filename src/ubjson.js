@@ -13,12 +13,4 @@ export function decode(buffer, options) {
 	return decoder.decode(buffer);
 }
 
-export class Ubjson {
-	static encode(value, options) {
-		return encode(value, options);
-	}
-
-	static decode(buffer, options) {
-		return decode(buffer, options);
-	}
-}
+export const Ubjson = { encode, decode };

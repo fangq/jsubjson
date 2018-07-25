@@ -1,15 +1,10 @@
-const textEncoderFactory = typeof TextEncoder !== 'undefined'
-	? () => new TextEncoder()
-	: () => {
-		// eslint-disable-next-line global-require
-		const util = require('util');
-		return new util.TextEncoder();
-	};
-
 export class UbjsonEncoder {
 	constructor(options = {}) {
 		this._options = options;
-		this._textEncoder = textEncoderFactory();
+		this._textEncoder = new (typeof TextEncoder !== 'undefined'
+			? TextEncoder
+			: require('util').TextEncoder // eslint-disable-line global-require
+		)();
 	}
 
 	encode(value) {
@@ -149,7 +144,7 @@ export class UbjsonEncoder {
 	_packContainerMarkers(type, count) {
 		const packers = [];
 		if (count != null) {
-			if (type != null) {
+			if (type) {
 				packers.push(this._packType('$'), this._packType(type));
 			}
 			packers.push(this._packType('#'), ...this._encode(count));
@@ -169,7 +164,7 @@ export class UbjsonEncoder {
 		const packers = this._packContainerMarkers(type, count);
 		for (const item of items) {
 			item.key && packers.push(...this._encodeValue(item.key, 'S'));
-			type == null && packers.push(this._packType(item.type));
+			!type && packers.push(this._packType(item.type));
 			packers.push(...this._encodeValue(item.value, type || item.type));
 		}
 		if (count == null) {
@@ -187,7 +182,7 @@ export class UbjsonEncoder {
 		if (a === b) {
 			return a;
 		}
-		if (a == null || b == null) {
+		if (!a || !b) {
 			return null;
 		}
 		const reduceTo = seq => seq[Math.min(seq.indexOf(a), seq.indexOf(b))];

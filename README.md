@@ -44,12 +44,12 @@ console.log(obj); // { hello: 'world', from: ['UBJSON'] }
 
 ### `Ubjson.encode(value, [options])`
 
-- `value: any` - input value, array or object to serialize.
+- `value: any` - input value/object/array to serialize.
 - `options: Object` (optional) - encoding options.
   - `options.optimizeArrays: boolean | 'onlyTypedArrays'` (default `false`) - enable use
-    of [optimized format] for arrays. If `'onlyTypedArrays'` is used, only *TypedArrays* use strongly
+    [optimized format] for arrays. If `'onlyTypedArrays'` is used, only *TypedArrays* use strongly
     typed container.
-  - `options.optimizeObjects: boolean` (default `false`) - enable use of [optimized format]
+  - `options.optimizeObjects: boolean` (default `false`) - enable use [optimized format]
     for objects.
 
 Method returns `ArrayBuffer` with *UBJSON* data.
@@ -59,14 +59,14 @@ Method returns `ArrayBuffer` with *UBJSON* data.
 
 ### `Ubjson.decode(buffer, [options])`
 
-- `buffer: ArrayBuffer` - input buffer, that *UBJSON* data.
+- `buffer: ArrayBuffer` - input buffer with *UBJSON* data.
 - `options: Object` (optional) - decoding options.
   - `options.int64Handling: 'error' | 'skip' | 'raw'` (default `error`) - Handling of unsupported
     *int64* values. 'error' throws exception, 'skip' ignore that value (or key/value pair) and 'raw'
     returns Uint8Array with *int64* bytes.
   - `options.highPrecisionNumberHandling: 'error' | 'skip' | 'raw'` (default `error`) - Handling
     of unsupported *high-precision numbers*. 'error' throws exception, 'skip' ignore that value
-    (or key/value pair) and 'raw' returns string represents that number.
+    (or key/value pair) and 'raw' returns string represents of that number.
   - `options.useTypedArrays: boolean` (default `false`) - enable use of *TypedArrays* for strongly
     typed containers.
 
@@ -75,7 +75,7 @@ Method returns decoded *UBJSON* value/object/array (`any`).
 
 ## Limitations
 
-Javascript not support [64-bit integers]&nbsp;(yet) and [high-precision numbers], as well
+Javascript not support [64-bit integers]&nbsp;(yet) and [high-precision numbers] as well
 as the library. You can use `'raw'` option in `int64Handling`/`highPrecisionNumberHandling`
 to retrive original data.
 

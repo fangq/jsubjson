@@ -134,7 +134,7 @@ export class UbjsonEncoder {
 			type: type || this._getType(x),
 			value: x
 		}));
-		return this._packContainerItems(items, ']', this._options.optimizeArrays === true);
+		return this._packContainerItems(items, ']', type || this._options.optimizeArrays === true);
 	}
 
 	_encodeObject(value) {

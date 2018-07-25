@@ -174,49 +174,67 @@ test('encode array (uint8 typed array)', t => {
 	t.end();
 });
 
-test('encode array (int8 typed array) [optimize]', t => {
+test('encode array (int8 typed array) [only typed array]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Int8Array.from([18, -2]), { optimizeArrays: true })),
+		toArray(ubjson.encode(
+			Int8Array.from([18, -2]),
+			{ optimizeArrays: 'onlyTypedArrays' }
+		)),
 		toArray('[', '$', 'i', '#', 'i', 2, 0x12, 0xfe)
 	);
 	t.end();
 });
 
-test('encode array (uint8 typed array) [optimize]', t => {
+test('encode array (uint8 typed array) [only typed array]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Uint8Array.from([18, 254]), { optimizeArrays: true })),
+		toArray(ubjson.encode(
+			Uint8Array.from([18, 254]),
+			{ optimizeArrays: 'onlyTypedArrays' }
+		)),
 		toArray('[', '$', 'U', '#', 'i', 2, 0x12, 0xfe)
 	);
 	t.end();
 });
 
-test('encode array (int16 typed array) [optimize]', t => {
+test('encode array (int16 typed array) [only typed array]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Int16Array.from([4660, -292]), { optimizeArrays: true })),
+		toArray(ubjson.encode(
+			Int16Array.from([4660, -292]),
+			{ optimizeArrays: 'onlyTypedArrays' }
+		)),
 		toArray('[', '$', 'I', '#', 'i', 2, 0x12, 0x34, 0xfe, 0xdc)
 	);
 	t.end();
 });
 
-test('encode array (int32 typed array) [optimize]', t => {
+test('encode array (int32 typed array) [only typed array]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Int32Array.from([305419896, -19088744]), { optimizeArrays: true })),
+		toArray(ubjson.encode(
+			Int32Array.from([305419896, -19088744]),
+			{ optimizeArrays: 'onlyTypedArrays' }
+		)),
 		toArray('[', '$', 'l', '#', 'i', 2, 0x12, 0x34, 0x56, 0x78, 0xfe, 0xdc, 0xba, 0x98)
 	);
 	t.end();
 });
 
-test('encode array (float32 typed array) [optimize]', t => {
+test('encode array (float32 typed array) [only typed array]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Float32Array.from([0.25, 0.125]), { optimizeArrays: true })),
+		toArray(ubjson.encode(
+			Float32Array.from([0.25, 0.125]),
+			{ optimizeArrays: 'onlyTypedArrays' }
+		)),
 		toArray('[', '$', 'd', '#', 'i', 2, 0x3e, 0x80, 0x00, 0x00, 0x3e, 0x00, 0x00, 0x00)
 	);
 	t.end();
 });
 
-test('encode array (float64 typed array) [optimize]', t => {
+test('encode array (float64 typed array) [only typed array]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Float64Array.from([0.25, 0.125]), { optimizeArrays: true })),
+		toArray(ubjson.encode(
+			Float64Array.from([0.25, 0.125]),
+			{ optimizeArrays: 'onlyTypedArrays' }
+		)),
 		toArray(
 			'[', '$', 'D', '#', 'i', 2,
 			0x3f, 0xd0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -226,9 +244,9 @@ test('encode array (float64 typed array) [optimize]', t => {
 	t.end();
 });
 
-test('encode array (uint8 typed array) [only typed array]', t => {
+test('encode array (uint8 typed array) [optimize]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Uint8Array.from([1, 2, 3]), { optimizeArrays: 'onlyTypedArrays' })),
+		toArray(ubjson.encode(Uint8Array.from([1, 2, 3]), { optimizeArrays: true })),
 		toArray('[', '$', 'U', '#', 'i', 3, 1, 2, 3)
 	);
 	t.end();

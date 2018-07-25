@@ -190,6 +190,14 @@ test('decode array (with no-op)', t => {
 	t.end();
 });
 
+test('decode array (empty, optimized)', t => {
+	t.deepEqual(
+		ubjson.decode(toBuffer('[', '#', 'i', 0)),
+		[]
+	);
+	t.end();
+});
+
 test('decode array (mixed, optimized)', t => {
 	t.deepEqual(
 		ubjson.decode(toBuffer('[', '#', 'i', 3, 'i', 1, 'C', 'a', 'T')),
@@ -330,6 +338,14 @@ test('decode object (with no-op)', t => {
 			'}', 'N'
 		)),
 		{ a: 1, b: 2, c: 3 }
+	);
+	t.end();
+});
+
+test('decode array (empty, optimized)', t => {
+	t.deepEqual(
+		ubjson.decode(toBuffer('{', '#', 'i', 0)),
+		{}
 	);
 	t.end();
 });

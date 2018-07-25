@@ -134,6 +134,14 @@ test('encode array (int8) [only typed array]', t => {
 	t.end();
 });
 
+test('encode array (empty)  [optimize]', t => {
+	t.deepEqual(
+		toArray(ubjson.encode([], { optimizeArrays: true })),
+		toArray('[', '#', 'i', 0)
+	);
+	t.end();
+});
+
 test('encode array (mixed) [optimize]', t => {
 	t.deepEqual(
 		toArray(ubjson.encode([1, 'a', true], { optimizeArrays: true })),
@@ -262,6 +270,14 @@ test('encode object', t => {
 			'i', 1, 'c', 'i', 3,
 			'}'
 		)
+	);
+	t.end();
+});
+
+test('encode object (empty)  [optimize]', t => {
+	t.deepEqual(
+		toArray(ubjson.encode({}, { optimizeObjects: true })),
+		toArray('{', '#', 'i', 0)
 	);
 	t.end();
 });

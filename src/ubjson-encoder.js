@@ -161,7 +161,9 @@ export class UbjsonEncoder {
 		let type;
 		let count;
 		if (optimize) {
-			type = this._obtainCommonType(items);
+			if (items.length) {
+				type = this._obtainCommonType(items);
+			}
 			count = items.length;
 		}
 		const packers = this._packContainerMarkers(type, count);

@@ -16,13 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     of tree-shaking is now possible ([#3](https://bitbucket.org/shelacek/ubjson/issues/3)).
       
     Please change
-    ```js
-    import Ubjson from '@shelacek/ubjson';
-    ```
+
+        import Ubjson from '@shelacek/ubjson';
+
     to
-    ```js
-    import { Ubjson } from '@shelacek/ubjson';
-    ```
+
+        import { Ubjson } from '@shelacek/ubjson';
   
     Now, you can also import `UbjsonEncoder`, `UbjsonDecoder`, `encode` and `decode` ;-).
 
@@ -69,17 +68,16 @@ Fix encoding of big integers > `int32` ([#1](https://bitbucket.org/shelacek/ubjs
 - **BREAKING**: Export static `Ubjson` class as default.
 
     Please change
-    ```js
-    import { Ubjson } from '@shelacek/ubjson';
-    // - or -
-    const ubjson = require('@shelacek/ubjson').Ubjson;
-    ```
+
+        import { Ubjson } from '@shelacek/ubjson';
+        // - or -
+        const ubjson = require('@shelacek/ubjson').Ubjson;
+
     to
-    ```js
-    import Ubjson from '@shelacek/ubjson';
-    // - or -
-    const ubjson = require('@shelacek/ubjson');
-    ```
+
+        import Ubjson from '@shelacek/ubjson';
+        // - or -
+        const ubjson = require('@shelacek/ubjson');
 
 
 ### Fixed

@@ -54,9 +54,9 @@ There are no changes yet.
 
 ### Fixed
 
-Fix handling of no-op values.
-All option's properties are now optional in typings.
-Fix encoding of big integers > `int32` ([#1](https://bitbucket.org/shelacek/ubjson/issues/1)).
+- Fix handling of no-op values.
+- All option's properties are now optional in typings.
+- Fix encoding of big integers > `int32` ([#1](https://bitbucket.org/shelacek/ubjson/issues/1)).
 
 
 ## [0.2.1] - 2018-07-18

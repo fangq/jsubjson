@@ -29,7 +29,9 @@
 		"max-classes-per-file": "warn",
 		"no-alert": "error",
 		"no-caller": "error",
-		"no-empty-function": ["warn", { "allow": ["functions", "arrowFunctions", "constructors"] }],
+		"no-empty-function": ["warn", {
+			"allow": ["functions", "arrowFunctions", "constructors"]
+		}],
 		"no-empty-pattern": "off",
 		"no-eval": "error",
 		"no-extend-native": "warn",
@@ -45,7 +47,6 @@
 		"no-new-func": "error",
 		"no-new-wrappers": "error",
 		"no-octal-escape": "error",
-		"no-return-assign": "error",
 		"no-return-await": "error",
 		"no-self-compare": "error",
 		"no-sequences": "warn",
@@ -55,7 +56,6 @@
 		"no-useless-concat": "warn",
 		"no-useless-return": "warn",
 		"radix": "warn",
-		"require-await": "warn",
 
 		// Variables
 		"no-label-var": "warn",
@@ -94,7 +94,14 @@
 		"new-parens": "warn",
 		"no-array-constructor": "error",
 		"no-lonely-if": "warn",
-		"no-mixed-operators": "error",
+		"no-mixed-operators": ["error", {
+			"groups": [
+				["&", "|", "^", "~", "<<", ">>", ">>>"],
+				["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+				["&&", "||"],
+				["in", "instanceof"]
+			]
+		}],
 		"no-mixed-spaces-and-tabs": "error",
 		"no-new-object": "warn",
 		"no-trailing-spaces": "error",
@@ -113,7 +120,11 @@
 		"semi-spacing": "warn",
 		"semi-style": "warn",
 		"space-before-blocks": "warn",
-		"space-before-function-paren": ["warn", { "anonymous": "always", "named": "never", "asyncArrow": "always" }],
+		"space-before-function-paren": ["warn", {
+			"anonymous": "always",
+			"named": "never",
+			"asyncArrow": "always"
+		}],
 		"space-in-parens": "warn",
 		"space-infix-ops": "warn",
 		"space-unary-ops": "warn",
@@ -134,7 +145,6 @@
 		"object-shorthand": ["warn", "consistent-as-needed"],
 		"prefer-arrow-callback": "warn",
 		"prefer-const": "warn",
-		"prefer-destructuring": "warn",
 		"prefer-numeric-literals": "warn",
 		"prefer-rest-params": "warn",
 		"prefer-spread": "warn",

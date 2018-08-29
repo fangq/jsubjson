@@ -104,7 +104,7 @@ There are no changes yet.
 
 ### Added
 
-- initial version
+- Initial version.
 
 
 [Unreleased]: https://bitbucket.org/shelacek/ubjson/branches/compare/master..v1.0.0

@@ -182,7 +182,7 @@ export class UbjsonEncoder {
 		if (a === b) {
 			return a;
 		}
-		if (!a || !b) {
+		if (!a) {
 			return null;
 		}
 		const reduceTo = seq => seq[Math.min(seq.indexOf(a), seq.indexOf(b))];

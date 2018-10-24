@@ -193,7 +193,7 @@ export class UbjsonDecoder {
 
 	_read(retriever, byteLength) {
 		this._checkRange(byteLength);
-		const value = retriever(this._storage, this._offset, byteLength);
+		const value = retriever(this._storage, this._offset);
 		this._offset += byteLength;
 		return value;
 	}

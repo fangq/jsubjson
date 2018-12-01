@@ -64,23 +64,29 @@ Method returns `ArrayBuffer` with *UBJSON* data.
 
 - `buffer: ArrayBuffer` - input buffer with *UBJSON* data.
 - `options: Object` (optional) - decoding options.
-    - `options.int64Handling: 'error' | 'skip' | 'raw'` (default `error`) - Handling of unsupported
-      *int64* values. 'error' throws exception, 'skip' ignore that value (or key/value pair) and 'raw'
+    - `options.int64Handling: 'error' | 'skip' | 'raw' | UbjsonDecoderCustomHandler` (default `error`) - Handling
+      of unsupported *int64* values. 'error' throws exception, 'skip' ignore that value (or key/value pair) and 'raw'
       returns Uint8Array with *int64* bytes.
-    - `options.highPrecisionNumberHandling: 'error' | 'skip' | 'raw'` (default `error`) - Handling
-      of unsupported *high-precision numbers*. 'error' throws exception, 'skip' ignore that value
+    - `options.highPrecisionNumberHandling: 'error' | 'skip' | 'raw' | UbjsonDecoderCustomHandler` (default `error`) -
+      Handling of unsupported *high-precision numbers*. 'error' throws exception, 'skip' ignore that value
       (or key/value pair) and 'raw' returns string represents of that number.
     - `options.useTypedArrays: boolean` (default `false`) - enable use of *TypedArrays* for strongly
       typed containers.
 
 Method returns decoded *UBJSON* value/object/array (`any`).
 
+`UbjsonDecoderCustomHandler` is function:
+
+```ts
+(storage: { array: Uint8Array, view: DataView }, offset: number, byteLength: number) => UbjsonValue;
+```
+
 
 ## Limitations
 
 Javascript not support [64-bit integers]&nbsp;(yet) and [high-precision numbers] as well
 as the library. You can use `'raw'` option in `int64Handling`/`highPrecisionNumberHandling`
-to retrive original data.
+to retrive original data or custom handling function.
 
 [no-op value]: http://ubjson.org/type-reference/value-types/#noop
 [64-bit integers]: http://ubjson.org/type-reference/value-types/#numeric-64bit

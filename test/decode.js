@@ -1,4 +1,5 @@
 const test = require('tape');
+const util = require('util');
 const ubjson = require('../dist/ubjson');
 
 function toBuffer(...args) {
@@ -108,6 +109,21 @@ test('decode int64 [raw]', t => {
 	t.end();
 });
 
+test('decode int64 [custom handler]', t => {
+	t.deepEqual(
+		ubjson.decode(
+			toBuffer('L', 0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0),
+			{
+				int64Handling: ({ view }, offset) => ({
+					int64: [view.getUint32(offset), view.getUint32(offset + 4)]
+				})
+			}
+		),
+		{ int64: [0x12345678, 0x9abcdef0] }
+	);
+	t.end();
+});
+
 test('decode int64 [invalid option]', t => {
 	t.throws(() => ubjson.decode(
 		toBuffer('L', 0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0),
@@ -154,6 +170,23 @@ test('decode high-precision number [raw]', t => {
 			{ highPrecisionNumberHandling: 'raw' }
 		),
 		'1.1'
+	);
+	t.end();
+});
+
+test('decode high-precision number [custom handler]', t => {
+	t.deepEqual(
+		ubjson.decode(
+			toBuffer('H', 'i', 3, '1', '.', '1'),
+			{
+				highPrecisionNumberHandling: ({ array }, offset, byteLength) => {
+					const view = new DataView(array.buffer, offset, byteLength);
+					const decoder = new util.TextDecoder();
+					return { highPrecisionNumber: decoder.decode(view) };
+				}
+			}
+		),
+		{ highPrecisionNumber: '1.1' }
 	);
 	t.end();
 });

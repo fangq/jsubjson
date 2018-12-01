@@ -7,7 +7,7 @@
 	"typings": "dist/ubjson.d.ts",
 	"scripts": {
 		"prebuild": "rm -rf dist",
-		"build": "rollup -c && cp src/types.d.ts dist/ubjson.d.ts",
+		"build": "rollup -c && cp src/*.d.ts src/*.js.flow dist/",
 		"prepublishOnly": "yarn run lint && yarn run test",
 		"prepare": "yarn run build",
 		"lint": "eslint src test",

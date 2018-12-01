@@ -42,7 +42,7 @@ console.log(obj); // { hello: 'world', from: ['UBJSON'] }
 ## API
 
 > Note: For full API and exported symbols, please see typings at
-> https://bitbucket.org/shelacek/ubjson/src/master/src/types.d.ts.
+> https://bitbucket.org/shelacek/ubjson/src/master/src/ubjson.d.ts.
 
 
 ### `Ubjson.encode(value, [options])`

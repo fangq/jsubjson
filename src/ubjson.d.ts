@@ -22,7 +22,7 @@ export declare class UbjsonDecoder {
 export declare function encode(value: any, options?: Partial<UbjsonEncoderOptions>): ArrayBuffer;
 export declare function decode(buffer: ArrayBuffer, options?: Partial<UbjsonDecoderOptions>): any;
 
-export interface Ubjson {
+export type Ubjson = {
 	encode(value: any, options?: Partial<UbjsonEncoderOptions>): ArrayBuffer;
 	decode(buffer: ArrayBuffer, options?: Partial<UbjsonDecoderOptions>): any;
-}
+};

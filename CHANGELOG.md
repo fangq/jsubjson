@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+There are no changes yet.
+
+
+## [1.0.1] - 2018-12-01
+
 ### Added
 
 - Flow typings.
@@ -109,7 +114,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial version.
 
 
-[Unreleased]: https://bitbucket.org/shelacek/ubjson/branches/compare/master..v1.0.0
+[Unreleased]: https://bitbucket.org/shelacek/ubjson/branches/compare/master..v1.0.1
+[1.0.1]: https://bitbucket.org/shelacek/ubjson/branches/compare/v1.0.1..v1.0.0
 [1.0.0]: https://bitbucket.org/shelacek/ubjson/branches/compare/v1.0.0..v0.2.3
 [0.2.3]: https://bitbucket.org/shelacek/ubjson/branches/compare/v0.2.3..v0.2.2
 [0.2.2]: https://bitbucket.org/shelacek/ubjson/branches/compare/v0.2.2..v0.2.1

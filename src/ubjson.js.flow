@@ -2,14 +2,20 @@
 
 type UbjsonValue = any;
 
+export type UbjsonDecoderCustomHandler = (
+	storage: { array: Uint8Array, view: DataView },
+	offset: number,
+	byteLength: number
+) => UbjsonValue;
+
 export interface UbjsonEncoderOptions {
 	optimizeArrays: boolean | 'onlyTypedArrays';
 	optimizeObjects: boolean;
 }
 
 export interface UbjsonDecoderOptions {
-	int64Handling: 'error' | 'skip' | 'raw';
-	highPrecisionNumberHandling: 'error' | 'skip' | 'raw';
+	int64Handling: 'error' | 'skip' | 'raw' | UbjsonDecoderCustomHandler;
+	highPrecisionNumberHandling: 'error' | 'skip' | 'raw' | UbjsonDecoderCustomHandler;
 	useTypedArrays: boolean;
 }
 
@@ -23,8 +29,15 @@ declare export class UbjsonDecoder {
 	decode(buffer: ArrayBuffer): UbjsonValue;
 }
 
-declare export function encode(value: UbjsonValue, options?: $Shape<UbjsonEncoderOptions>): ArrayBuffer;
-declare export function decode(buffer: ArrayBuffer, options?: $Shape<UbjsonDecoderOptions>): UbjsonValue;
+declare export function encode(
+	value: UbjsonValue,
+	options?: $Shape<UbjsonEncoderOptions>
+): ArrayBuffer;
+
+declare export function decode(
+	buffer: ArrayBuffer,
+	options?: $Shape<UbjsonDecoderOptions>
+): UbjsonValue;
 
 declare export class Ubjson {
 	static encode(value: UbjsonValue, options?: $Shape<UbjsonEncoderOptions>): ArrayBuffer;

@@ -142,6 +142,9 @@ export class UbjsonDecoder {
 	}
 
 	_handleUnsupported(byteLength, handlingBehavior, isBinary) {
+		if (typeof handlingBehavior === 'function') {
+			return this._read(handlingBehavior, byteLength);
+		}
 		switch (handlingBehavior) {
 			case 'skip':
 				this._skip(byteLength);
@@ -193,7 +196,7 @@ export class UbjsonDecoder {
 
 	_read(retriever, byteLength) {
 		this._checkRange(byteLength);
-		const value = retriever(this._storage, this._offset);
+		const value = retriever(this._storage, this._offset, byteLength);
 		this._offset += byteLength;
 		return value;
 	}

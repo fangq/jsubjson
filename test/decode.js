@@ -216,6 +216,48 @@ test('decode array (strongly typed, optimized)', t => {
 	t.end();
 });
 
+test('decode N-D array (strongly typed, optimized)', t => {
+	t.deepEqual(
+		ubjson.decode(
+			toBuffer('[', '$', '[', '#', 'i', 2, '$', 'i', '#', 'i', 3, 1, 2, 3, '$', 'i', '#', 'i', 3, 4, 5, 6)
+		),
+		[[1, 2, 3], [4, 5, 6]]
+	);
+	t.end();
+});
+
+test('decode array of objects (optimized)', t => {
+	t.deepEqual(
+		ubjson.decode(
+			toBuffer(
+				'[', '$', '{', '#', 'i', 2,
+				'$', 'i', '#', 'i', 3, 'i', 1, 'a', 1, 'i', 1, 'b', 2, 'i', 1, 'c', 3,
+				'$', 'i', '#', 'i', 3, 'i', 1, 'd', 4, 'i', 1, 'e', 5, 'i', 1, 'f', 6
+			)
+		),
+		[{ a: 1, b: 2, c: 3 }, { d: 4, e: 5, f: 6 }]
+	);
+	t.end();
+});
+
+test('decode array of objects of arrays (optimized)', t => {
+	t.deepEqual(
+		ubjson.decode(
+			toBuffer(
+				'[', '$', '{', '#', 'i', 2,
+				'$', '[', '#', 'i', 2,
+				'i', 1, 'a', '$', 'i', '#', 'i', 2, 1, 2,
+				'i', 1, 'b', '$', 'i', '#', 'i', 2, 3, 4,
+				'$', '[', '#', 'i', 2,
+				'i', 1, 'c', '$', 'i', '#', 'i', 2, 5, 6,
+				'i', 1, 'd', '$', 'i', '#', 'i', 2, 7, 8
+			)
+		),
+		[{ a: [1, 2], b: [3, 4] }, { c: [5, 6], d: [7, 8] }]
+	);
+	t.end();
+});
+
 test('decode array (strongly typed, unexpected eof, optimized)', t => {
 	t.throws(() => ubjson.decode(toBuffer('[', '$', 'i', '#', 'i', 3, 1, 2)));
 	t.end();

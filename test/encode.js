@@ -134,7 +134,7 @@ test('encode array (int8) [only typed array]', t => {
 	t.end();
 });
 
-test('encode array (empty)  [optimize]', t => {
+test('encode array (empty) [optimize]', t => {
 	t.deepEqual(
 		toArray(ubjson.encode([], { optimizeArrays: true })),
 		toArray('[', '#', 'i', 0)
@@ -174,10 +174,44 @@ test('encode array (only null values) [optimize]', t => {
 	t.end();
 });
 
-test('encode array (uint8 typed array)', t => {
+test('encode N-D array [optimize]', t => {
 	t.deepEqual(
-		toArray(ubjson.encode(Uint8Array.from([1, 2]))),
-		toArray('[', 'i', 1, 'i', 2, ']')
+		toArray(ubjson.encode([[1, 2, 3], [4, 5, 6]], { optimizeArrays: true })),
+		toArray('[', '$', '[', '#', 'i', 2, '$', 'i', '#', 'i', 3, 1, 2, 3, '$', 'i', '#', 'i', 3, 4, 5, 6)
+	);
+	t.end();
+});
+
+test('encode array of objects [optimize]', t => {
+	t.deepEqual(
+		toArray(ubjson.encode(
+			[{ a: 1, b: 2, c: 3 }, { d: 4, e: 5, f: 6 }],
+			{ optimizeArrays: true, optimizeObjects: true }
+		)),
+		toArray(
+			'[', '$', '{', '#', 'i', 2,
+			'$', 'i', '#', 'i', 3, 'i', 1, 'a', 1, 'i', 1, 'b', 2, 'i', 1, 'c', 3,
+			'$', 'i', '#', 'i', 3, 'i', 1, 'd', 4, 'i', 1, 'e', 5, 'i', 1, 'f', 6
+		)
+	);
+	t.end();
+});
+
+test('encode array of objects of arrays [optimize]', t => {
+	t.deepEqual(
+		toArray(ubjson.encode(
+			[{ a: [1, 2], b: [3, 4] }, { c: [5, 6], d: [7, 8] }],
+			{ optimizeArrays: true, optimizeObjects: true }
+		)),
+		toArray(
+			'[', '$', '{', '#', 'i', 2,
+			'$', '[', '#', 'i', 2,
+			'i', 1, 'a', '$', 'i', '#', 'i', 2, 1, 2,
+			'i', 1, 'b', '$', 'i', '#', 'i', 2, 3, 4,
+			'$', '[', '#', 'i', 2,
+			'i', 1, 'c', '$', 'i', '#', 'i', 2, 5, 6,
+			'i', 1, 'd', '$', 'i', '#', 'i', 2, 7, 8
+		)
 	);
 	t.end();
 });
